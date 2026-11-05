@@ -17,7 +17,7 @@
 //----------Con VotingMachine------------------
 //
 
-+vm::status("close") <- // Este plan es una reacción al ver status de vm a close
++vm::status("closed") <- // Este plan es una reacción al ver status de vm a close
     .print("La votación se ha cerrado.").
 
 +vm::status("open") <-
