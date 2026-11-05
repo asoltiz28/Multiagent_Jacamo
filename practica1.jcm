@@ -41,8 +41,8 @@ mas practica1 {
       focus: vm::w.vm
       focus: co::w.c1
       focus: gui::w.consola
-      
-      goals: startVoting([21, 23, 27], 1000)
+      beliefs: option([21, 23, 27]), deadline(4000)
+      //goals: startVoting([21, 23, 27], 1000)
       // goals: voting([21, 23, 27], 1000) // Se ha quitado para que no de problemas con la antigua forma de votar
     }
 
@@ -57,10 +57,14 @@ mas practica1 {
       artifact consola: gui.GUIconsole("smartroom")   // "console" ya existe en todo workspace (cartago.tools.Console)
     }
 
-    organisation o: org.xml {
-      group g1 : group1 {
-        //players: bob role1
+    // <!--instanciar las misiones y normas de la organizacion-->
+
+    organisation o: org.xml { 
+      group r1 : room {   // "room" es el id del group-specification en org.xml
+        players: mario assistant, luiggi assistant, bowser assistant, rc controller
+        responsible-for : temp_r1
       }
+      scheme temp_r1 : decide_temp 
     }
 
 }

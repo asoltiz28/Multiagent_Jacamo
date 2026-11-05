@@ -9,6 +9,15 @@
 
 /* Plans */
 
+// ---> con Organizacion
++!census[scheme(temp_r1)] <-
+    .print("haciendo el censo.");
+    // .findall(tuplas, consulta, resultado)
+    // play(agente, rol, grupo)
+    .findall(A, play(A, assistant, _), Censo);
+    +censo_actual(Censo);
+    .print("el censo es: ", Censo).
+
 // -------------------Con VotingMachine------------------
 // open([21,25,30], [mario, luigi, bowser], 4000)
 
@@ -16,6 +25,19 @@
     ?censo(Censo);
     open(Options, Censo, Timeout);
     .print("--- Inicio la votación ---").
++!open_voting[scheme(temp_r1), source(self)] <-
+    ?censo_actual(Censo);
+    ?deadline(Deadline);
+    ?option(Options);
+    open(Options, Censo, Deadline);
+    .print("---------Votacion iniciada---------").
+
++!close_voting[scheme(temp_r1),source(self)] <-
+    vm::close; // no hace falta vm::close porque el artefacto VotingMachine ya tiene un plan para cerrar la votación
+    ?vm::result(R);
+    .print("El resultado de la votación ha sido: ", R);
+    +preference(R);
+    !temp(R).
 
 /*censo(C) :- .all_names(A) & .my_name(rm) & .delete(rm, A, C).
     — La línea daba error por un typo: 'rm' en vez de 'rc'
@@ -23,10 +45,11 @@
       en A (sin valor). */
 censo(C) :- .all_names(A) & .my_name(rc) & .delete(rc, A, C). // Quiero borrar rc de todos los agentes (A) y guardar el resultado de la resta en C
 
-+vm::result(R) <-   // namespace con "::" (con ":" se interpretaba como contexto del plan)
+/*+vm::result(R) <-   // namespace con "::" (con ":" se interpretaba como contexto del plan)
     .print("El resultado de la votación ha sido: ", R);
     -+preference(R);
     !temp(R).
+*/
 
 // Para el aire cuando la temperatura está a 1 grado o menos del objetivo (como en la versión del profesor).
 // "not state(\"idle\")" evita llamar a stop si el aire ya está parado.
@@ -102,4 +125,4 @@ winner(ConvId, T) :-
 { include("$jacamo/templates/common-moise.asl") }
 
 // uncomment the include below to have an agent compliant with its organisation
-//{ include("$moise/asl/org-obedient.asl") }
+{ include("$moise/asl/org-obedient.asl") }

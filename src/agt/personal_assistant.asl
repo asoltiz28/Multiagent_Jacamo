@@ -12,14 +12,26 @@
 
 /* Plans */
 
+//--- con organizacion
++!vote[scheme(S)] <-   // S: cualquier esquema (temp_r1 en este caso)
+    // decidir voto
+    ?preference(P);
+    ?vm::options(Options);
+    .sort(Options, OrderedOptions);
+    ?my_vote(OrderedOptions, P, Papeleta);
+    //enviar voto
+    vm::vote(Papeleta);
+    .print("He votado: ", Papeleta).
+
 // Cualquier cambio en el artefacto se ve reflejado en las creencias del agente.
 //
 //----------Con VotingMachine------------------
 //
 
-+vm::status("closed") <- // Este plan es una reacción al ver status de vm a close
++vm::status("close") <- // Este plan es una reacción al ver status de vm a close
     .print("La votación se ha cerrado.").
 
+/*
 +vm::status("open") <-
     .print("La votación se ha abierto");
     //decidir voto
@@ -30,6 +42,7 @@
     //enviar voto
     vm::vote(Papeleta);
     .print("He votado: ", Papeleta).
+*/
 
 // La anterior manera de hacerlo
 
@@ -56,4 +69,4 @@ my_vote([H], _, H).
 { include("$jacamo/templates/common-moise.asl") }
 
 // uncomment the include below to have an agent compliant with its organisation
-//{ include("$moise/asl/org-obedient.asl") }
+{ include("$moise/asl/org-obedient.asl") }
