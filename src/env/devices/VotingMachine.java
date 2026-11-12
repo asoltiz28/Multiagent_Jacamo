@@ -85,6 +85,11 @@ public class VotingMachine extends Artifact {
 
   @OPERATION
   public void close() {
+    // Si ya está cerrada (la cerró rc con vm::close o el countdown), no se hace nada:
+    // si no, defineObsProperty("result") fallaría por estar ya definida
+    if (getObsProperty("status").getValue().equals("close")) {
+      return;
+    }
     int result = computeResult();
 
     // TODO (Task 1): expose the result as an observable property named "result"

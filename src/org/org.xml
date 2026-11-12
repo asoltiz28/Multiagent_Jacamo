@@ -41,10 +41,11 @@
     <scheme id = "hacer_cafe">
         <goal id = "haciendo_cafe">
             <plan operator = "sequence">
-                <goal id = "echar_agua">
-                <goal id = "echar_cafe">
-                <goal id = "calentar_cafe">
-                <goal id = "servir_cafe">
+                <goal id = "echar_agua"/>      <!-- en XML, una etiqueta sin hijos se cierra con "/>" -->
+                <goal id = "echar_cafe"/>
+                <goal id = "calentar_cafe"/>
+                <goal id = "servir_cafe"/>
+                <goal id = "beber_cafe"/>      <!-- todo goal de una misión tiene que estar en el árbol del esquema -->
             </plan>
         </goal>
 
@@ -100,9 +101,12 @@
         <property id="mission_cardinality" value="prohibition" />
     </properties-->
 
-    <!-- the norms of the application -->
+    <!-- obligamos al agente a cumplir con las misiones -->
     <norm id="norm1" type="obligation" role="controller" mission="mVoteController"/>
     <norm id="norm2" type="obligation" role="assistant" mission="mVote"/>
+    <norm id ="norm3" type="obligation" role="controller" mission="mPrepararCafe"/>
+    <norm id ="norm4" type="obligation" role="assistant" mission="mServirCafe"/>
+    <norm id ="norm5" type = "obligation" role="controller" mission="mServirCafe"/>
 </normative-specification>
 
 </organisational-specification>

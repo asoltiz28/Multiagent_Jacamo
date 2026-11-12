@@ -27,6 +27,10 @@
 //
 //----------Con VotingMachine------------------
 //
++!servir_cafe <- .print("Aqui tienes tu cafe con pastitias").   // sin contexto no se pone ":"
+
++!beber_cafe <- .print("Que rico mi cafe ").
+
 
 +vm::status("close") <- // Este plan es una reacción al ver status de vm a close
     .print("La votación se ha cerrado.").
