@@ -1,6 +1,8 @@
 // Agent bob in project smartroom
 
 /* Initial beliefs and rules */
+preference(24).
+term("queliceros", "apendice de los aranicos usado para distintos fines").
 
 /* Initial goals */
 
@@ -8,6 +10,33 @@
 
 
 /* Plans */
+
+//---Broker---//
++!registro <-
+    !suscripcion;
+    .df_register("dictionary(es-ES)"); // registramos el servicio en las paginas amarillas.
+    !traducir.
+
++!suscripcion<-
+    .df_subscribe("dictionary(es-ES)").
+
++!traducir<-
+    .df_search("dictionary(es-ES)", L); // buscar en las paginas amarillas
+    .nth(0,L, A);
+    .print(A, " sabe hacer dictionary(es-ES)").
+
++provider(Agente, Servicio) : Servicio == "dictionary(es-ES)" <- // me llega cuando un agente se registra como que sabe hacer un registro.
+    .print(" El agente ", Agente, " sabe hacer ", Servicio); // reaccion al registro por que te has suscrito
+    .send(Agente, tell, term("queliceros")).
+    
+
++term(X)[source(A)] <- // quien ha enviado el término
+    ?term(X, Y); // consultar creencias con ?
+    .send(A, tell, term(X,Y)).
+
++term(X, Y) <-
+    .print(X," Significa: ", Y).
+
 
 // ---> con Organizacion
 
@@ -153,8 +182,9 @@ winner(ConvId, T) :-
        +started(Y,M,D,H,Min,Sec);
        co::inc;
        co::inc_get(3, C);
-       +contador_actualizado(C).        // add a new belief
+       +contador_actualizado(C);        // add a new belief
        // +temperature(25).                      // add a new belief
+       !registro.
 
 { include("$jacamo/templates/common-cartago.asl") }
 { include("$jacamo/templates/common-moise.asl") }
