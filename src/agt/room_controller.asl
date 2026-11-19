@@ -3,6 +3,7 @@
 /* Initial beliefs and rules */
 preference(24).
 term("queliceros", "apendice de los aranicos usado para distintos fines").
+term("queliceros", "cosa de los aranicos").
 
 /* Initial goals */
 
@@ -25,18 +26,16 @@ term("queliceros", "apendice de los aranicos usado para distintos fines").
     .nth(0,L, A);
     .print(A, " sabe hacer dictionary(es-ES)").
 
-+provider(Agente, Servicio) : Servicio == "dictionary(es-ES)" <- // me llega cuando un agente se registra como que sabe hacer un registro.
-    .print(" El agente ", Agente, " sabe hacer ", Servicio); // reaccion al registro por que te has suscrito
-    .send(Agente, tell, term("queliceros")).
-    
+//+provider(Agente, Servicio) : Servicio == "dictionary(es-ES)" <- // me llega cuando un agente se registra como que sabe hacer un registro.
+   // .print(" El agente ", Agente, " sabe hacer ", Servicio); // reaccion al registro por que te has suscrito
+   // .send(Agente, askAll, term("queliceros", Y)).
+   // .send(Agente, askOne, term("queliceros", Y)).
+    // .send(Agente, tell, term("queliceros")).
+
 
 +term(X)[source(A)] <- // quien ha enviado el término
     ?term(X, Y); // consultar creencias con ?
     .send(A, tell, term(X,Y)).
-
-+term(X, Y) <-
-    .print(X," Significa: ", Y).
-
 
 // ---> con Organizacion
 

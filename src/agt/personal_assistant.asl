@@ -69,6 +69,17 @@ my_vote([H], _, H).
         ?preference(P);                          // query a belief. A veces, es necesario hacer consultas mentales del propio agente.
         .print("Mi preferencia es: ", P).
 
++!suscripcion<-
+    .df_subscribe("dictionary(es-ES)").
++provider(Agente, Servicio) : Servicio == "dictionary(es-ES)" <- // me llega cuando un agente se registra como que sabe hacer un registro.
+    .print(" El agente ", Agente, " sabe hacer ", Servicio); // reaccion al registro por que te has suscrito
+    .send(Agente, askAll, term("queliceros", Y)).
+    //.send(Agente, askOne, term("queliceros", Y)).
+    // .send(Agente, tell, term("queliceros")).
++term(X, Y) <-
+    .print(X," Significa: ", Y).
+
+
 { include("$jacamo/templates/common-cartago.asl") }
 { include("$jacamo/templates/common-moise.asl") }
 
